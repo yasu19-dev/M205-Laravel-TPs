@@ -22,4 +22,11 @@ class BaseController extends Controller
     public function Afficher($nom, $age) {
         return view('afficher', ['nom' => $nom, 'age' => $age]);
 }
+
+    public function __construct(){
+        $this->middleware('OneMiddleware')->only('oneMethode');
+        $this->middleware('TwoMiddleware')->except('oneMethode');
+        $this->middleware('ThreeMiddleware')->except(['oneMethode', 'twoMethode']);
+
+    }
 }
