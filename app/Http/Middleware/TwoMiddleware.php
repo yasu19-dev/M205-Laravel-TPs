@@ -15,6 +15,7 @@ class TwoMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        dd('STOP ! Je suis le TwoMiddleware');
         return $next($request);
     }
 }

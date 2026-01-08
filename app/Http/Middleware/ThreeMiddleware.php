@@ -15,6 +15,7 @@ class ThreeMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        dd('STOP ! Je suis le ThreeMiddleware');
         return $next($request);
     }
 }

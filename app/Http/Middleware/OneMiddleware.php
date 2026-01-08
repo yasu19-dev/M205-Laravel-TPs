@@ -15,6 +15,8 @@ class OneMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // On arrête tout et on affiche ce message
+        dd('STOP ! Je suis le OneMiddleware');
         return $next($request);
     }
 }
