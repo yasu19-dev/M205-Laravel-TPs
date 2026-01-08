@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\BaseController;
+use App\Http\Controllers\InvokeController;
+use App\Http\Controllers\RessourceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/one', [BaseController::class, 'oneMethode']);
+Route::get('/index', [BaseController::class, 'index']);
+Route::get('/afficher/{nom}/{age}', [BaseController::class, 'Afficher']);
+Route::get('/oneAction', InvokeController::class);
+Route::resource('MaRessource', RessourceController::class);
