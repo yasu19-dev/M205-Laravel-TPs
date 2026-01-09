@@ -15,7 +15,7 @@ class AgeMiddleware
      */
 
     // (Filtrer l'âge)
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next):Response
     {
         if ($request->age > 21) {
             return $next($request);

@@ -16,14 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/accueil', function () {
+
+Route::get('/accueil/{age}', function () {
     return view('accueil');
 })->middleware('age');
 
-Route::get('/contact', function () {
+Route::get('/contact/{nom}', function () {
     return view('contact');
 })->middleware('user');
 
-Route::get('/test', function () {
+Route::get('/test/{nom}/{age}', function () {
     return view('test');
 })->middleware('test');
