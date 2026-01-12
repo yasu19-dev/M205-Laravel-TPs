@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GestionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/calcul/{nombre}',[GestionController::class,'calcul']);
+Route::get('/moyenne/{nom}/{note}', [GestionController::class, 'moyenne']);
+Route::get('/notes', [GestionController::class, 'notes']);
