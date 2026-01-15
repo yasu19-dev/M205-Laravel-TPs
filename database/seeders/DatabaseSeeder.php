@@ -18,5 +18,13 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        //donnees initiales
+        $this->call([
+            FilmsTableSeeder::class,
+        ]);
+    //donnees de test
+
+            \App\Models\Film::factory(10)->create();
     }
 }
