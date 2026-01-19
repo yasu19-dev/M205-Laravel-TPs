@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', FilmController::class . '@index');
+Route::get('/film', FilmController::class . '@index');
 
 Route::get('/test-tp', function () {
     // Sélectionnez tous les films
