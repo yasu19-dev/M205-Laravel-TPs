@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StagiaireController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/stagiaires', [StagiaireController::class, 'index']);
+Route::get('/stagiaires/test', [StagiaireController::class, 'test']);
