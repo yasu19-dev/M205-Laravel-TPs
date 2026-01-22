@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StagiaireController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/stagiaire/create', [StagiaireController::class, 'create'])->name('stagiaire.create');
+Route::post('/stagiaire/insert', [StagiaireController::class, 'insert'])->name('stagiaire.insert');
