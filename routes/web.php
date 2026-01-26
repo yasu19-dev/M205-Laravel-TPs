@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // ---------------------------- ROUTAGE ------------------------------------
 
@@ -59,3 +59,10 @@ Route::get('/vue', function(){
 // route vue/controller
 Route::get('vue2','App\Http\Controllers\CalculController@testvue');
 
+// route vue imbriqué (vue crée dans un sous dossier)
+Route::get('/profil', function(){
+    return view('admin.profile');
+});
+
+// route TP1
+Route::get('/affichage', 'App\Http\Controllers\ControllerTP1@etudiant');
