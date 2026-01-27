@@ -24,7 +24,8 @@
             <!-- place navbar here -->
         </header>
         <main>
-          Bienvenue
+          <h1>Bienvenue {{ $name }}</h1>
+          <p>Nous sonmes le {{ $date }}</p>
         </main>
         <footer>
             <!-- place footer here -->
