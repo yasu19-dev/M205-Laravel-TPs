@@ -26,6 +26,7 @@
         <main>
           <h1>Bienvenue {{ $name }}</h1>
           <p>Nous sonmes le {{ $date }}</p>
+          <x-button>Clique moi</x-button>
         </main>
         <footer>
             <!-- place footer here -->

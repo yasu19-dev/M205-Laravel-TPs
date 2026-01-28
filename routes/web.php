@@ -117,3 +117,11 @@ Route::get('/conditions', function () {
 Route::get('/loops', function () {
     return view('pages.loops');
 })->name('loops');
+
+
+// ---------- BLADE COMPONENT -----------
+
+Route::get('/bladecomponent', function(){
+    return view('accueil');
+}
+);
