@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Http\Request as HttpRequest;
+
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +74,11 @@ Route::get('/bonjour', function(){
     return view('vue',['name'=>$name, 'date'=> date('d/m/Y')]);
 });
 
+// Route avec Request:    http://127.0.0.1:8000/alo?name=Yasmine
+Route::get('/alo',function(HttpRequest $request){
+    return view('vue',['name'=> $request['name'], 'date'=> date('d/m/Y')]);
+});
+
 // Utilisation de with()
 Route::get('/bienvenue', function() {
     $name = 'Zaid';
@@ -125,3 +133,8 @@ Route::get('/bladecomponent', function(){
     return view('accueil');
 }
 );
+
+// ------------------ MIDDLEWARE --------------------
+Route::get('/middleware',function () {
+  return view('home');
+})->middleware('testM');
