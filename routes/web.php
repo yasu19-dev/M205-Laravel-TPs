@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommandeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('commandes/download/{id}', [CommandeController::class, 'download'])
+    ->name('commandes.download');
+    
+Route::resource('commandes', CommandeController::class);
