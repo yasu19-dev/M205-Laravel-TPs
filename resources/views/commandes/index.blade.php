@@ -9,6 +9,9 @@
     <h2>Liste des Commandes</h2>
     <a href="{{ route('commandes.create') }}" class="btn btn-success mb-3">Ajouter une commande</a>
 
+    <a href="{{ route('commandes.search') }}" class="btn btn-primary mb-3">
+        🔍 Rechercher / Filtrer </a>
+
     @if ($message = Session::get('success'))
         <div class="alert alert-success">{{ $message }}</div>
     @endif
@@ -29,7 +32,7 @@
                 <td>{{ $cmd->id }}</td>
                 <td>{{ $cmd->date }}</td>
                 <td>{{ $cmd->client_id }}</td>
-                
+
                 <td>
                     @if($cmd->image)
                         <img src="{{ asset('storage/'.$cmd->image) }}" width="50" height="50" alt="img">
@@ -40,7 +43,7 @@
 
                 <td>
                     <form action="{{ route('commandes.destroy',$cmd->id) }}" method="POST">
-                        
+
                         <a class="btn btn-primary btn-sm" href="{{ route('commandes.edit',$cmd->id) }}">Modifier</a>
 
                         @if($cmd->image)

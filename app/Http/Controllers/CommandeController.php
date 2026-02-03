@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Commande;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage; // IMPORTANT
@@ -42,7 +43,7 @@ class CommandeController extends Controller
             ->with('success', 'Commande ajoutée avec image !');
     }
 
-    public function edit(Commande $commande) 
+    public function edit(Commande $commande)
     {
         return view('commandes.edit', compact('commande'));
     }
@@ -57,13 +58,13 @@ class CommandeController extends Controller
             if ($commande->image) {
                 Storage::disk('public')->delete($commande->image);
             }
-            
+
             // 2. Uploader la nouvelle
             $path = $request->file('image')->store('commandes', 'public');
             $input['image'] = $path;
         } else {
             // Si pas de nouvelle image, on garde l'ancienne (ne pas écraser par null)
-            unset($input['image']); 
+            unset($input['image']);
         }
 
         $commande->update($input);
@@ -87,7 +88,7 @@ class CommandeController extends Controller
     public function download($id)
     {
         $commande = Commande::findOrFail($id);
-        
+
         if (!$commande->image) {
             return back()->with('error', 'Aucun fichier associé.');
         }
@@ -97,5 +98,26 @@ class CommandeController extends Controller
         return response()->download($path);
     }
 
-    
+    public function search(Request $request)
+    {
+        // 1. On prépare la requête (sans l'exécuter tout de suite)
+        // On utilise 'with' pour charger les infos du client (optimisation)
+        $query = Commande::with('client');
+
+        // 2. Si un client est sélectionné dans le formulaire
+        if ($request->has('client_id') && $request->client_id != '') {
+            $query->where('client_id', $request->client_id);
+        }
+
+        // 3. On exécute la requête avec pagination (10 par page)
+        $commandes = $query->paginate(10);
+
+        // 4. On récupère la liste de tous les clients pour le menu déroulant
+        $clients = Client::all();
+
+        // 5. On retourne la vue (on peut réutiliser index ou créer une vue search)
+        return view('commandes.search', compact('commandes', 'clients'));
+    }
+
+
 }

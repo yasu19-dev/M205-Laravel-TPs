@@ -11,4 +11,9 @@ class Commande extends Model
     protected $fillable = [
     'id', 'date', 'client_id', 'image' // Ajout de 'image'
 ];
+
+public function client()
+{
+    return $this->belongsTo(Client::class);
+}
 }
