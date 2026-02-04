@@ -9,11 +9,18 @@ class Commande extends Model
 {
     use HasFactory;
     protected $fillable = [
-    'id', 'date', 'client_id', 'image' // Ajout de 'image'
+    'id', 'date', 'client_id', 'image'
 ];
 
 public function client()
 {
     return $this->belongsTo(Client::class);
+}
+
+public function produits()
+{
+    return $this->belongsToMany(Produit::class, 'commande_produits')
+                ->withPivot('qte_cmd')
+                ->withTimestamps();
 }
 }

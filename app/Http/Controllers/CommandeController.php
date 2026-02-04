@@ -24,7 +24,10 @@ class CommandeController extends Controller
     {
         // 1. Validation (Optionnel mais recommandé)
         $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // ou 'file' pour tout type
+                        'client_id' => 'required|exists:clients,id',
+                        'date' => 'required|date',
+                        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+             // ou 'file' pour tout type
         ]);
 
         $input = $request->all();
@@ -59,15 +62,12 @@ class CommandeController extends Controller
                 Storage::disk('public')->delete($commande->image);
             }
 
-            // 2. Uploader la nouvelle
-            $path = $request->file('image')->store('commandes', 'public');
-            $input['image'] = $path;
-        } else {
-            // Si pas de nouvelle image, on garde l'ancienne (ne pas écraser par null)
-            unset($input['image']);
-        }
 
-        $commande->update($input);
+        }
+            // 2. Uploader la nouvelle
+                        $path = $request->file('image')->store('commandes', 'public');
+                        $input['image'] = $path;
+                    $commande->update($input);
 
         return redirect()->route('commandes.index')
             ->with('success', 'Commande modifiée !');
@@ -75,10 +75,11 @@ class CommandeController extends Controller
 
     public function destroy(Commande $commande)
     {
+        //soft delete pas besoin de supprimer l'image pour la restauration future
         // Supprimer l'image du disque avant de supprimer la ligne en BD
-        if ($commande->image) {
-            Storage::disk('public')->delete($commande->image);
-        }
+        // if ($commande->image) {
+        //     Storage::disk('public')->delete($commande->image);
+        // }
 
         $commande->delete();
         return redirect()->route('commandes.index');
@@ -100,22 +101,21 @@ class CommandeController extends Controller
 
     public function search(Request $request)
     {
-        // 1. On prépare la requête (sans l'exécuter tout de suite)
-        // On utilise 'with' pour charger les infos du client (optimisation)
+
         $query = Commande::with('client');
 
-        // 2. Si un client est sélectionné dans le formulaire
+
         if ($request->has('client_id') && $request->client_id != '') {
             $query->where('client_id', $request->client_id);
         }
 
-        // 3. On exécute la requête avec pagination (10 par page)
+        // pagination (10 par page)
         $commandes = $query->paginate(10);
 
-        // 4. On récupère la liste de tous les clients pour le menu déroulant
+
         $clients = Client::all();
 
-        // 5. On retourne la vue (on peut réutiliser index ou créer une vue search)
+
         return view('commandes.search', compact('commandes', 'clients'));
     }
 

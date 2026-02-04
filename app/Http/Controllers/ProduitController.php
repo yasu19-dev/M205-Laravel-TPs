@@ -14,7 +14,7 @@ class ProduitController extends Controller
         return view('produits.index', compact('produits'));
     }
 
- 
+
 
     // Affiche la corbeille (uniquement les supprimés)
     public function corbeille()
@@ -50,7 +50,7 @@ class ProduitController extends Controller
     // 3. FORCE DELETE (Suppression définitive)
     public function forceDestroy($id)
     {
-        $produit = Produit::withTrashed()->find($id);
+        $produit = Produit::onlyTrashed()->find($id);
 
         if($produit) {
             $produit->forceDelete(); // Supprime physiquement la ligne SQL

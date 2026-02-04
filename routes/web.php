@@ -29,14 +29,14 @@ Route::resource('commandes', CommandeController::class);
 
 
 
-// Route pour voir la corbeille (à mettre AVANT la route resource si possible pour éviter les conflits d'ID)
+// Route corbeille
 Route::get('produits/corbeille', [ProduitController::class, 'corbeille'])->name('produits.corbeille');
 
-// Routes pour restaurer et supprimer définitivement
+// Routes restore
 Route::get('produits/restore/{id}', [ProduitController::class, 'restore'])->name('produits.restore');
 Route::delete('produits/force/{id}', [ProduitController::class, 'forceDestroy'])->name('produits.forceDestroy');
 
-// Routes standard (index, create, store, edit, update, destroy)
+// Routes ressource
 Route::resource('produits', ProduitController::class);
 
 

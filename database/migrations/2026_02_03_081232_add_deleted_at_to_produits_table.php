@@ -15,7 +15,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('produits', function (Blueprint $table) {
-            $table->dropSoftDeletes(); // Supprime la colonne si on fait un rollback
+            $table->dropSoftDeletes(); 
         });
     }
 };

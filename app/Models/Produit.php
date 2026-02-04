@@ -14,4 +14,13 @@ class Produit extends Model
 
     // Pour que 'deleted_at' soit traité comme une date (automatique en Laravel récent, mais bonne pratique)
     protected $dates = ['deleted_at'];
+
+    public function commandes()
+    {
+         return $this->belongsToMany(Commande::class, 'commande_produits')
+                ->withPivot('qte_cmd')
+                ->withTimestamps();
+    }
+
+
 }
