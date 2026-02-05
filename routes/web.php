@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommandeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProduitController;
@@ -39,4 +40,22 @@ Route::delete('produits/force/{id}', [ProduitController::class, 'forceDestroy'])
 // Routes ressource
 Route::resource('produits', ProduitController::class);
 
+// Routes d'authentification
 
+Route::get('/inscription', [AuthController::class, 'inscription'])->name('inscription');
+Route::post('/inscription', [AuthController::class, 'enregistrer'])->name('enregistrer');
+Route::get('/login', [AuthController::class, 'formLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// --- Routes Protégées (Nécessite connexion) ---
+Route::middleware(['custom.auth'])->group(function () {
+
+    Route::get('/profil', [AuthController::class, 'profil'])->name('profil');
+
+    // On protège toute la gestion des commandes et produits ici
+    // Tu peux ajouter une vérification supplémentaire pour voir si c'est 'admin'
+    Route::resource('commandes', CommandeController::class);
+    Route::resource('produits', ProduitController::class);
+
+});
