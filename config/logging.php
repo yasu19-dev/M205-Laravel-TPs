@@ -117,6 +117,12 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'mon_fichier' => [
+        'driver' => 'single',
+        'path' => storage_path('logs/mon_fichier.log'),
+        'level' => 'debug', // J'ai mis 'debug' pour tout capturer lors du test, le doc suggère 'info' 
+        ],
     ],
 
 ];
