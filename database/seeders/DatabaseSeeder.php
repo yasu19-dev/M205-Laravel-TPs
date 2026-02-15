@@ -18,5 +18,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        // Tu peux utiliser les Factories pour aller plus vite, ou insérer manuellement
+\App\Models\Auteur::factory(5)->create(); // Crée 5 auteurs
+\App\Models\Livre::factory(10)->create(); // Crée 10 livres
+\App\Models\Emprunt::factory(5)->create();
     }
 }
