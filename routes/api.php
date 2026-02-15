@@ -14,11 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->post('/test-post', function (Request $request) {
-    return response()->json([
-        'status' => 'Succès',
-        'message' => 'Ton API a bien reçu les données !',
-        'user' => $request->user()->name,
-        'data_received' => $request->all()
-    ]);
+// Route::middleware('auth:api')->post('/test-post', function (Request $request) {
+//     return response()->json([
+//         'status' => 'Succès',
+//         'message' => 'Ton API a bien reçu les données !',
+//         'user' => $request->user()->name,
+//         'data_received' => $request->all()
+//     ]);
+// });
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
 });
