@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Events\ActionEffectuee;
 use App\Models\Client;
 use App\Models\Commande;
 use Illuminate\Http\Request;
@@ -40,7 +41,10 @@ class CommandeController extends Controller
             $input['image'] = $path;
         }
 
-        Commande::create($input);
+        $commande = Commande::create($input);
+
+        // AJOUTER L'ÉVÉNEMENT
+        event(new ActionEffectuee($commande, 'Création'));
 
         return redirect()->route('commandes.index')
             ->with('success', 'Commande ajoutée avec image !');
@@ -65,9 +69,11 @@ class CommandeController extends Controller
 
         }
             // 2. Uploader la nouvelle
-                        $path = $request->file('image')->store('commandes', 'public');
-                        $input['image'] = $path;
-                    $commande->update($input);
+        $path = $request->file('image')->store('commandes', 'public');
+        $input['image'] = $path;
+        $commande->update($input);
+        // AJOUTER L'ÉVÉNEMENT
+        event(new ActionEffectuee($commande, 'Modification'));
 
         return redirect()->route('commandes.index')
             ->with('success', 'Commande modifiée !');
@@ -80,8 +86,12 @@ class CommandeController extends Controller
         // if ($commande->image) {
         //     Storage::disk('public')->delete($commande->image);
         // }
-
+    event(new ActionEffectuee($commande, 'Suppression'));
         $commande->delete();
+
+        // AJOUTER L'ÉVÉNEMENT
+
+
         return redirect()->route('commandes.index');
     }
 

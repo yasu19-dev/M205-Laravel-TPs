@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ActionEffectuee;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,9 @@ class ProduitController extends Controller
         $produit = Produit::find($id);
         $produit->delete(); // Remplit juste 'deleted_at', ne supprime pas la ligne
 
+        //-------- AJOUTER L'ÉVÉNEMENT ----------
+        event(new ActionEffectuee($produit, 'Suppression (Corbeille)'));
+
         return redirect()->route('produits.index')
             ->with('success', 'Produit mis à la corbeille.');
     }
@@ -41,6 +45,9 @@ class ProduitController extends Controller
 
         if($produit) {
             $produit->restore(); // Remet 'deleted_at' à NULL
+
+            // AJOUTER L'ÉVÉNEMENT
+        event(new ActionEffectuee($produit, 'Restauration'));
         }
 
         return redirect()->route('produits.corbeille') // Ou vers index
@@ -53,6 +60,8 @@ class ProduitController extends Controller
         $produit = Produit::onlyTrashed()->find($id);
 
         if($produit) {
+            // AVANT de supprimer définitivement l'objet
+            event(new ActionEffectuee($produit, 'Suppression Définitive'));
             $produit->forceDelete(); // Supprime physiquement la ligne SQL
         }
 
