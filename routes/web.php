@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuteurController;
+use App\Http\Controllers\EmpruntController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +20,7 @@ use App\Http\Controllers\LivreController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
@@ -50,6 +52,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('livres', LivreController::class);
+    Route::resource('auteurs', AuteurController::class);
+    Route::resource('emprunts', EmpruntController::class);
 });
 
 
